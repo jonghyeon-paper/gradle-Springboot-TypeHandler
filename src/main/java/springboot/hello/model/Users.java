@@ -2,6 +2,7 @@ package springboot.hello.model;
 
 import java.io.Serializable;
 
+//@Alias("Users") // default camel case
 public class Users implements Serializable {
 
 	private static final long serialVersionUID = 7126132316099798710L;
@@ -14,7 +15,7 @@ public class Users implements Serializable {
 	
 	private boolean enabled;
 	
-	private String gender;
+	private UsersGender gender;
 	
 	private String joinDate;
 	
@@ -56,11 +57,11 @@ public class Users implements Serializable {
 				+ "]";
 	}
 
-	public String getGender() {
+	public UsersGender getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(UsersGender gender) {
 		this.gender = gender;
 	}
 

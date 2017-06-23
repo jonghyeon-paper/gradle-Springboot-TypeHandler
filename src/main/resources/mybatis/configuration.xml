@@ -4,4 +4,8 @@
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
+	
+	<typeHandlers>
+		<typeHandler handler="springboot.configuration.mybatis.typehandler.CustomEnumTypeHandler" javaType="springboot.hello.model.UsersGender"/>
+	</typeHandlers>
 </configuration>
