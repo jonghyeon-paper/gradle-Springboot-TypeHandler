@@ -1,31 +1,50 @@
 package springboot.hello.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
+import springboot.configuration.annotation.StoredValue;
+
 public enum UsersGender {
 	
-MALE("M", 1), FEMALE("F", 2);
+	MALE("M", 1), FEMALE("F", 2);
 	
-	private UsersGender(String codeName, Integer codeValue) {
-		this.codeName = codeName;
+	private UsersGender(String storedValue, Integer codeValue) {
+		this.storedValue = storedValue;
 		this.codeValue = codeValue;
 	}
 	
-	private String codeName;
+	private String storedValue;
 	
 	private Integer codeValue;
 
-	public String getCodeName() {
-		return codeName;
-	}
-
-	public void setCodeName(String codeName) {
-		this.codeName = codeName;
+	@StoredValue
+	public String getStoredValue() {
+		return storedValue;
 	}
 
 	public Integer getCodeValue() {
 		return codeValue;
 	}
-
-	public void setCodeValue(Integer codeValue) {
-		this.codeValue = codeValue;
+	
+	@JsonValue
+	public Map<String, String> getJsonValue() {
+		Map<String, String> data = new HashMap<>();
+		data.put("name", this.name());
+		return data;
 	}
+	
+	@JsonCreator
+	public static UsersGender createJsonValue(String name) {
+		for (UsersGender item : UsersGender.class.getEnumConstants()) {
+			if (name.equalsIgnoreCase(item.name())) {
+				return item;
+			}
+		}
+		return null;
+	}
+
 }

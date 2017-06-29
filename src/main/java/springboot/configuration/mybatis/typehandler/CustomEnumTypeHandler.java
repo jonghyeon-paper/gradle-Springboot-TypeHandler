@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import org.apache.ibatis.type.EnumTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 
+import springboot.configuration.annotation.StoredValue;
+
 public class CustomEnumTypeHandler<E extends Enum<E>> extends EnumTypeHandler<E> {
 
 	private Class<E> type;
@@ -48,7 +50,18 @@ public class CustomEnumTypeHandler<E extends Enum<E>> extends EnumTypeHandler<E>
 	
 	private E getCustomEnumResult(String codeValue) {
 		try {
-			Method method = type.getEnumConstants()[0].getClass().getDeclaredMethod("getCodeName");
+			Method method = null;
+			
+			for (Method item : type.getEnumConstants()[0].getClass().getMethods()) {
+				if (item.isAnnotationPresent(StoredValue.class)) {
+					method = item;
+				}
+			}
+			
+			if (method == null) {
+				method = type.getEnumConstants()[0].getClass().getDeclaredMethod("getStoredValue");
+			}
+			
 			for (E item : type.getEnumConstants()) {
 				Object value = method.invoke(item);
 				if (codeValue.equals(value)) {
