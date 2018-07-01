@@ -7,5 +7,6 @@
 	
 	<typeHandlers>
 		<typeHandler handler="springboot.configuration.mybatis.typehandler.CustomEnumTypeHandler" javaType="springboot.hello.model.UsersGender"/>
+		<typeHandler handler="springboot.configuration.mybatis.typehandler.CustomStringTypeHandler" javaType="java.lang.String"/>
 	</typeHandlers>
 </configuration>
